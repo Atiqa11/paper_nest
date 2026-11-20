@@ -60,7 +60,7 @@ export default function AIAssistantPage({
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'm-init',
-      sender: 'ai',
+      sender: 'assistant',
       text: `Selam & Welcome to **PaperNest AI Studio**! 📚✨\n\nI am your intelligent literary advisor and academic tutor. I have direct access to our full catalog of **2,800+ authentic books**, including our new **Turkish Literature Collection** (Orhan Pamuk, Elif Shafak, Sabahattin Ali) and all 54 Pakistani education and literature categories.\n\nChoose an AI tool above or ask me anything below!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     }
@@ -154,10 +154,10 @@ export default function AIAssistantPage({
 
       const aiMsg: ChatMessage = {
         id: `ai-${Date.now()}`,
-        sender: 'ai',
+        sender: 'assistant',
         text: reply,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        recommendations: recs
+        recommendedProducts: recs
       };
 
       setMessages(prev => [...prev, aiMsg]);
@@ -323,7 +323,7 @@ export default function AIAssistantPage({
                     key={msg.id} 
                     className={`flex gap-3 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                   >
-                    {msg.sender === 'ai' && (
+                    {msg.sender === 'assistant' && (
                       <div className="w-8 h-8 rounded-full bg-teal-700 text-white flex items-center justify-center flex-shrink-0 mt-1 shadow-xs">
                         <Bot className="w-4 h-4" />
                       </div>
@@ -337,13 +337,13 @@ export default function AIAssistantPage({
                       <div className="whitespace-pre-line">{msg.text}</div>
 
                       {/* Attached Product Recommendations */}
-                      {msg.recommendations && msg.recommendations.length > 0 && (
+                      {msg.recommendedProducts && msg.recommendedProducts.length > 0 && (
                         <div className="mt-4 pt-3 border-t border-slate-200 dark:border-teal-900/60 space-y-2">
                           <div className="text-[11px] font-bold text-teal-800 dark:text-teal-300 uppercase tracking-wider">
                             Direct Catalog Matches:
                           </div>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                            {msg.recommendations.map(p => (
+                            {msg.recommendedProducts.map(p => (
                               <div 
                                 key={p.id}
                                 onClick={() => showProduct(p.id)}
